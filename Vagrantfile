@@ -28,8 +28,8 @@ Vagrant.configure("2") do |config|
   config.vm.network :forwarded_port, guest: 8098, host: 8098, id: 'riak-http'
   config.vm.network :forwarded_port, guest: 22, host: 2222, id: 'ssh'
 
-  config.vm.provision "shell", path: "install/install.sh"
   config.vm.provision "file", source: "resources", destination: "/home/vagrant/resources"  
+  config.vm.provision "shell", path: "install/install.sh"
   config.vm.provision "shell", path: "install/learner.sh"
-
+  config.vm.provision "shell", inline: "rm -rf /home/vagrant/resources"
 end
