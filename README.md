@@ -1,6 +1,6 @@
 # NoSQL Box
 
-Vagrant to create a NoSQL box 
+Vagrant to create a NoSQL box over Ubuntu 20.04 and Python 3.8
 
 - Postgres
 - Riak
@@ -9,6 +9,10 @@ Vagrant to create a NoSQL box
 - Neo4j
 
 This box is based in Ubuntu 18.04 and Docker.
+
+# TODO
+
+- Riak bug (Python 3.8)
 
 # Dependencies
 
