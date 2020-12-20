@@ -1,12 +1,13 @@
 Vagrant.configure("2") do |config|
 
   config.vm.box = "ubuntu/focal64"
+  config.vm.hostname = "nosql-box"
   config.vm.box_check_update = false
 
   config.vm.provider "virtualbox" do |vb|
-    vb.name = "TallerNoSQL_v3.1.1"
-    vb.cpus = 1
-    vb.memory = 2048
+    vb.name = "TallerNoSQL_v3.2"
+    vb.cpus = 2
+    vb.memory = 3048
   end
 
   config.vm.provision "file", source: "~/.ssh/id_rsa.pub", destination: "~/.ssh/me.pub"
@@ -30,6 +31,5 @@ Vagrant.configure("2") do |config|
 
   config.vm.provision "file", source: "resources", destination: "/home/vagrant/resources"  
   config.vm.provision "shell", path: "install/install.sh"
-  config.vm.provision "shell", path: "install/learner.sh"
   config.vm.provision "shell", inline: "rm -rf /home/vagrant/resources"
 end
