@@ -30,6 +30,6 @@ Vagrant.configure("2") do |config|
   config.vm.network :forwarded_port, guest: 22, host: 2222, id: 'ssh'
 
   config.vm.provision "file", source: "resources", destination: "/home/vagrant/resources"  
-  config.vm.provision "shell", path: "install/install.sh"
+  config.vm.provision "shell", path: "scripts/install.sh"
   config.vm.provision "shell", inline: "rm -rf /home/vagrant/resources"
 end

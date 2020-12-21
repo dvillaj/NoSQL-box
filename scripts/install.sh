@@ -41,6 +41,8 @@ function installNodeJs {
 function installPython3.6 {
     echo "Instaling python 3.6"
 
+    # http://lavatechtechnology.com/post/install-python-35-36-and-37-on-ubuntu-2004/
+
     add-apt-repository -y ppa:deadsnakes/ppa
     apt -qq update
     apt install -y python3.6 python3.6-dev
@@ -70,13 +72,32 @@ function installDocker {
 function installPythonPackages {
     echo "Instaling python packages"
 
-    su - learner -c "source /home/learner/venv/bin/activate; pip install -r /home/vagrant/resources/python/requeriments.txt"
-    su - learner -c "source /home/learner/venv/bin/activate; pip install git+https://github.com/dvillaj/ipython-cql.git"
+    sudo -u learner 'bash' <<EOF
+
+    source /home/learner/venv/bin/activate
+
+    pip install -r /home/vagrant/resources/python/requeriments.txt
+    pip install git+https://github.com/dvillaj/ipython-cql.git
+
+EOF
+    
 }
 
+function installJupyterLabExtensions {
 
+    sudo -u learner 'bash' <<EOF
 
-function configJupyterLab {
+    source /home/learner/venv/bin/activate
+
+    pip install jupyterlab-git
+    jupyter lab build
+
+    jupyter labextension install jupyterlab-drawio
+EOF
+
+}
+
+function serviceJupyterLab {
     echo "Config Jupyter Lab ..."
 
     mv /home/learner/start-jupyter.sh /usr/local/bin
@@ -90,8 +111,8 @@ function configJupyterLab {
     systemctl start jupyter.service
 }
 
-echo "Installing ..."
 
+echo "Setting up NoSQL box ..."
 
 addLocalUser
 installSystemPackages
@@ -99,6 +120,5 @@ installNodeJs
 installPython3.6
 installDocker
 installPythonPackages
-configJupyterLab
-
-# jupyter lab build
+installJupyterLabExtensions
+serviceJupyterLab
