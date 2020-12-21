@@ -92,6 +92,7 @@ function installJupyterLabExtensions {
     pip install jupyterlab-git
     jupyter lab build
 
+    jupyter labextension install @jupyterlab/toc
     jupyter labextension install jupyterlab-drawio
 EOF
 
