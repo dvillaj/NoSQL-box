@@ -89,7 +89,7 @@ riak up -d coordinator
 ### Scale the Cluster (4 members)
 
 ```
-riak scale member=4
+riak up -d --scale member=4
 ```
 
 ### Down
