@@ -7,6 +7,8 @@ function addLocalUser {
     cp -r resources/learner /home
     chmod +x /home/learner/*.sh
 
+    usermod -aG sudo learner
+
     su - learner -c "mkdir ~/.ssh; chmod 700 ~/.ssh"
     cp .ssh/authorized_keys /home/learner/.ssh
 
@@ -24,10 +26,16 @@ function installSystemPackages {
     echo "Instaling system packages ..."
 
     apt -qq update
-    # apt install -qq -y python3-pip
-    apt install -qq -y autoconf automake libtool build-essential libssl-dev libffi-dev libpq-dev python3-virtualenv
-    # python3-dev
-    # apt install -qq -y jq
+    apt install -qq -y autoconf automake libtool build-essential libssl-dev libffi-dev libpq-dev python3-virtualenv jq
+}
+
+function installNodeJs {
+    echo "Instaling NodeJs"
+
+    curl -sL https://deb.nodesource.com/setup_14.x -o ~/nodesource_setup.sh
+    bash ~/nodesource_setup.sh
+    apt install -y nodejs
+    rm ~/nodesource_setup.sh
 }
 
 function installPython3.6 {
@@ -59,26 +67,11 @@ function installDocker {
 }
 
 
-
 function installPythonPackages {
     echo "Instaling python packages"
-    
-    # pip3 install -U pip
-
-    # Python 3.6.9
-    
-    #pip3 install -r /home/vagrant/resources/python/requeriments.txt
-    #pip3 install -U requests
 
     su - learner -c "source /home/learner/venv/bin/activate; pip install -r /home/vagrant/resources/python/requeriments.txt"
-
-    pip install git+https://github.com/dvillaj/ipython-cql.git
-    
-    #git clone https://github.com/dvillaj/ipython-cql.git
-    #cd ipython-cql
-    #python setup.py install
-    #cd ..
-    #rm -rf ipython-cql
+    su - learner -c "source /home/learner/venv/bin/activate; pip install git+https://github.com/dvillaj/ipython-cql.git"
 }
 
 
@@ -97,34 +90,15 @@ function configJupyterLab {
     systemctl start jupyter.service
 }
 
-function installConda {
-    wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O ~/miniconda.sh
-    bash ~/miniconda.sh -b -p /opt/miniconda
-    rm ~/miniconda.sh
-}
-
-function py5hon36 {
-    wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O ~/miniconda.sh
-    bash ~/miniconda.sh -b -p /opt/miniconda
-    rm ~/miniconda.sh
-}
-
 echo "Installing ..."
 
 
 addLocalUser
 installSystemPackages
+installNodeJs
 installPython3.6
-
-# installConda
-
-#installDocker
+installDocker
 installPythonPackages
 configJupyterLab
 
-#/opt/miniconda/bin/conda init
-
-#conda create --prefix ./envs python=3.6 python -y
-
-# virtualenv -p /usr/bin/python3.6 /home/learner/venv
-# source /home/learner/venv/bin/activate
+# jupyter lab build

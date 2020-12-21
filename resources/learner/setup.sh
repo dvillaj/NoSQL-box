@@ -7,13 +7,15 @@ if [ $? -ne 0 ]; then
 fi
 
 while [ ! -f /home/learner/notebooks/.install -a  "$1" != "-f" ]; do
-    read -p "This process downloads the latest version of the notebooks (deleting the current ones). Continue? " yn
+    read -p "This process downloads the latest version of the notebooks (deleting the current ones). Continue? [y/N] " yn
     case $yn in
         [Yy]* ) break;;
-        [Nn]* ) exit 1;;
-        * ) echo "Please answer yes or no.";;
+        * ) exit 1;;
     esac
 done
+
+rm -rf /home/learner/notebooks/Taller_BBDD
+git clone https://github.com/dvillaj/Taller_BBDD.git /home/learner/notebooks/Taller_BBDD
 
 rm -rf /opt/compose/compose*
 
@@ -32,7 +34,6 @@ if [ -f /home/learner/notebooks/.install ]; then
     docker pull mongo:4.2.5
     docker pull neo4j:3.5.11
     docker pull huggingface/mongoku:1.3.0
-fi
 
-rm -rf /home/learner/notebooks
-git clone https://github.com/dvillaj/Taller_BBDD.git /home/learner/notebooks
+    rm -f /home/learner/notebooks/.installv
+fi
