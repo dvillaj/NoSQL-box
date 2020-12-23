@@ -23,10 +23,10 @@ function addLocalUser {
 }
 
 function installSystemPackages {
-    echo "Instaling system packages ..."
+    echo "Instaling system packages from packages.conf  ..."
 
     apt -qq update
-    apt install -qq -y autoconf automake libtool build-essential libssl-dev libffi-dev libpq-dev python3-virtualenv jq
+    apt install -y $(grep -vE "^\s*#" resources/system/packages.conf  | tr "\n" " ")
 }
 
 function installNodeJs {
@@ -39,7 +39,7 @@ function installNodeJs {
 }
 
 function installPython3.6 {
-    echo "Instaling python 3.6"
+    echo "Instaling python 3.6 ..."
 
     # http://lavatechtechnology.com/post/install-python-35-36-and-37-on-ubuntu-2004/
 
@@ -69,44 +69,55 @@ function installDocker {
 }
 
 
-function installPythonPackages {
-    echo "Instaling python packages"
-
-    sudo -u learner 'bash' <<EOF
+function installPythonPackages_Learner {
+    echo "Instaling python packages from requeriments.txt ..."
 
     source /home/learner/venv/bin/activate
 
-    pip install -r /home/vagrant/resources/python/requeriments.txt
-    pip install git+https://github.com/dvillaj/ipython-cql.git
-
-EOF
-    
+    pip install -r resources/system/requeriments.txt
+    pip install git+https://github.com/dvillaj/ipython-cql.git   
 }
 
-function installJupyterLabExtensions {
+function installPythonPackages {
+    export -f installPythonPackages_Learner
+    su learner -c "bash -c installPythonPackages_Learner"
+}
 
-    sudo -u learner 'bash' <<EOF
+
+function installJupyterLabExtensions_Learner {
+    echo "Installing lab extensions ..."
 
     source /home/learner/venv/bin/activate
 
+
+    echo "Git Client"
     pip install jupyterlab-git
     jupyter lab build
 
+    echo "Table of Contents"
     jupyter labextension install @jupyterlab/toc
-    jupyter labextension install jupyterlab-drawio
-EOF
 
+    echo "Drawio"
+    jupyter labextension install jupyterlab-drawio
+
+    echo "Variable Inspector"
+    jupyter labextension install @lckr/jupyterlab_variableinspector
+}
+
+function installJupyterLabExtensions {
+    export -f installJupyterLabExtensions_Learner
+    su learner -c "bash -c installJupyterLabExtensions_Learner"
 }
 
 function serviceJupyterLab {
     echo "Config Jupyter Lab ..."
 
-    mv /home/learner/start-jupyter.sh /usr/local/bin
+    mkdir /etc/jupyter
+    cp resources/system/start-jupyter.sh /usr/local/bin
+    chmod a+x /usr/local/bin/start-jupyter.sh
+    cp resources/system/jupyter_notebook_config.json /etc/jupyter
+    cp resources/system/jupyter.service /etc/systemd/system/
 
-    su - learner -c "source /home/learner/venv/bin/activate; cd; jupyter lab --generate-config"
-    cat /home/vagrant/resources/python/jupyter.config >> /home/learner/.jupyter/jupyter_notebook_config.py
-
-    cp resources/jupyter.service /etc/systemd/system/
     systemctl enable jupyter.service
     systemctl daemon-reload
     systemctl start jupyter.service

@@ -160,3 +160,10 @@ neo4j down
 ```
 
 
+## JupyterLab
+
+### Logging
+
+```
+sudo journalctl -f -u jupyter
+```
