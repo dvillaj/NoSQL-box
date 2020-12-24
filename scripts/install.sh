@@ -69,18 +69,10 @@ function installDocker {
 }
 
 
-function installPythonPackages_Learner {
+function installPythonPackages {
     echo "Instaling python packages from requeriments.txt ..."
 
-    source /home/learner/venv/bin/activate
-
-    pip install -r resources/system/requeriments.txt
-    pip install git+https://github.com/dvillaj/ipython-cql.git   
-}
-
-function installPythonPackages {
-    export -f installPythonPackages_Learner
-    su learner -c "bash -c installPythonPackages_Learner"
+    su learner -c "source /home/learner/venv/bin/activate;  pip install -r resources/system/requeriments.txt"
 }
 
 
@@ -89,6 +81,9 @@ function installJupyterLabExtensions_Learner {
 
     source /home/learner/venv/bin/activate
 
+    # export jupyter notebooks with images embebed
+    pip install jupyter_contrib_nbextensions==0.5.1 
+    jupyter contrib nbextension install --user
 
     echo "Git Client"
     pip install jupyterlab-git
