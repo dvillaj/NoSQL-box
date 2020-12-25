@@ -38,6 +38,7 @@ function installNodeJs {
     rm ~/nodesource_setup.sh
 }
 
+# Python 3.6 is needed for riak
 function installPython3.6 {
     echo "Instaling python 3.6 ..."
 
@@ -82,8 +83,13 @@ function installJupyterLabExtensions_Learner {
     source /home/learner/venv/bin/activate
 
     # export jupyter notebooks with images embebed
-    pip install jupyter_contrib_nbextensions==0.5.1 
+    # Version 0.5.1 
+    pip install jupyter_contrib_nbextensions
     jupyter contrib nbextension install --user
+
+    pip install jupyter_nbextensions_configurator
+    jupyter nbextensions_configurator enable --user
+
 
     echo "Git Client"
     pip install jupyterlab-git
@@ -110,7 +116,6 @@ function serviceJupyterLab {
     mkdir /etc/jupyter
     cp resources/system/start-jupyter.sh /usr/local/bin
     chmod a+x /usr/local/bin/start-jupyter.sh
-    cp resources/system/jupyter_notebook_config.json /etc/jupyter
     cp resources/system/jupyter.service /etc/systemd/system/
 
     systemctl enable jupyter.service
