@@ -1,24 +1,31 @@
 # NoSQL Box
 
-Vagrant to create a NoSQL box 
+Vagrant to create a NoSQL box including:
 
 - Postgres
 - Riak
 - Cassandra
 - Mongodb
 - Neo4j
+- JupyterLab
 
-This box is based in Ubuntu 18.04 and Docker.
+This box is based in Ubuntu 20.04 and Docker.
 
 # Dependencies
 
-- https://github.com/dvillaj/compose-postgres
-- https://github.com/dvillaj/compose-riak
-- https://github.com/dvillaj/compose-cassandra
-- https://github.com/dvillaj/compose-mongodb
-- https://github.com/dvillaj/compose-neo4j
-- https://github.com/dvillaj/docker-riak
-- https://github.com/dvillaj/ipython-cql.git
+- [Postgres Docker Compose](https://github.com/dvillaj/compose-postgres)
+- [Cassandra Docker Compose](https://github.com/dvillaj/compose-cassandra)
+- [MongoDb Docker Compose](https://github.com/dvillaj/compose-mongodb)
+- [Neo4j Docker Compose](https://github.com/dvillaj/compose-neo4j)
+- [Riak Docker Compose](https://github.com/dvillaj/compose-riak)
+- [Riak Docker Image](https://github.com/dvillaj/docker-riak)
+- [Cql Python package](https://github.com/dvillaj/ipython-cql.git)
+- [Setup script](https://raw.githubusercontent.com/dvillaj/files-repository/master/NoSQL-box/setup.sh)
+
+# TODO
+
+- Riak bug (Python 3.8)
+
 
 ## Install
 
@@ -150,4 +157,13 @@ neo4j up -d
 
 ```
 neo4j down
+```
+
+
+## JupyterLab
+
+### Logging
+
+```
+sudo journalctl -f -u jupyter
 ```
