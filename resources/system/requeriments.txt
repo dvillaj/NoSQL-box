@@ -1,5 +1,5 @@
 # jupyterlab
-jupyterlab==2.2.9
+jupyterlab>=2.2,<3"
 
 # Pandas
 pandas
