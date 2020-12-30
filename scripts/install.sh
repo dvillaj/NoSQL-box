@@ -14,8 +14,6 @@ function addLocalUser {
 
     chown -R learner:learner /home/learner
 
-    echo "source ~/.environment" | tee -a /home/learner/.bashrc
-
     mkdir -p /opt/compose
     chown learner:learner /opt/compose
 
