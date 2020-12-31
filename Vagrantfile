@@ -5,7 +5,7 @@ Vagrant.configure("2") do |config|
   config.vm.box_check_update = false
 
   config.vm.provider "virtualbox" do |vb|
-    vb.name = "NoSQL_Box_v1"
+    vb.name = "NoSQL_Box"
     vb.cpus = 2
     vb.memory = 2048
   end
