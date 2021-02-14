@@ -18,7 +18,8 @@ Vagrant.configure("2") do |config|
     rm /home/vagrant/.ssh/me.pub
   SHELL
 
-
-  config.vm.provision "shell", inline: "git clone https://github.com/dvillaj/NoSQL-Services.git /opt/deploy && /opt/deploy/install.sh"
+ 
+  config.vm.synced_folder "shared/deploy", "/opt/deploy"
+  config.vm.provision "shell", inline: "/opt/deploy/install.sh"
 
 end
