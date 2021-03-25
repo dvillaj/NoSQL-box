@@ -1,0 +1,3 @@
+[submodule "shared/deploy"]
+	path = shared/deploy
+	url = git@github.com:dvillaj/NoSQL-Services.git

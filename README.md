@@ -16,29 +16,7 @@ Additional info can be found in the following repo: https://github.com/dvillaj/N
 vagrant up
 ```
 
-### Box's IP
 
-```
-vagrant ssh -c "hostname -I |  cut -d' ' -f2" 2>/dev/null
-``` 
-
-
-## Setup Ports by NAT
-
-```
-vagrant halt
-
-VBoxManage modifyvm "NoSQL_Box" --natpf1 "bolt,tcp,,7687,,7687"
-VBoxManage modifyvm "NoSQL_Box" --natpf1 "bottle,tcp,,8082,,8082"
-VBoxManage modifyvm "NoSQL_Box" --natpf1 "jupyter,tcp,,8001,,8001"
-VBoxManage modifyvm "NoSQL_Box" --natpf1 "mongod,tcp,,27017,,27017"
-VBoxManage modifyvm "NoSQL_Box" --natpf1 "mongoku,tcp,,3100,,3100"
-VBoxManage modifyvm "NoSQL_Box" --natpf1 "neo4j,tcp,,7474,,7474"
-VBoxManage modifyvm "NoSQL_Box" --natpf1 "postgres,tcp,,5432,,5432"
-VBoxManage modifyvm "NoSQL_Box" --natpf1 "pgadmin,tcp,,5050,,5050"
-VBoxManage modifyvm "NoSQL_Box" --natpf1 "riak-protocol-buffer,tcp,,8087,,8087"
-VBoxManage modifyvm "NoSQL_Box" --natpf1 "riak-http,tcp,,8098,,8098"
-```
 
 ## Setup Ports by SSH Tunnelling
 
