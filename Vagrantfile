@@ -24,7 +24,7 @@ Vagrant.configure("2") do |config|
   config.vm.network :forwarded_port, guest: 22, host: 2222, id: 'ssh'
 
 
-  config.vm.provision "file", source: "~/.ssh/id_rsa.pub", destination: "~/.ssh/me.pub"
+  config.vm.provision "file", source: "public-keys", destination: "~/.ssh/me.pub"
   config.vm.provision "shell", inline: <<-SHELL
     cat /home/vagrant/.ssh/me.pub >> /root/.ssh/authorized_keys
     rm /home/vagrant/.ssh/me.pub
