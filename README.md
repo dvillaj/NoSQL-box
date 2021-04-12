@@ -38,3 +38,16 @@ ssh -N -L 8001:127.0.0.1:8001 \
 ## Jupyter Lab
 
 http://localhost:8001
+
+
+## SSH Config
+
+Fix 
+`~\.ssh\config` 
+
+```
+Host localhost
+        StrictHostKeyChecking no
+        UserKnownHostsFile=/dev/null
+        LogLevel=error
+```
