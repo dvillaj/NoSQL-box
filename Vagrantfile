@@ -23,7 +23,7 @@ Vagrant.configure("2") do |config|
   config.vm.network :forwarded_port, guest: 8087, host: 8087, id: 'riak-protocol-buffer'
   config.vm.network :forwarded_port, guest: 8098, host: 8098, id: 'riak-http'
   config.vm.network :forwarded_port, guest: 61208, host: 61208, id: 'glances'
-  config.vm.network :forwarded_port, guest: 9009, host: 9000, id: 'portainer'
+  config.vm.network :forwarded_port, guest: 9000, host: 9000, id: 'portainer'
   config.vm.network :forwarded_port, guest: 22, host: 2222, id: 'ssh'
 
   config.vm.provision "file", source: "public-keys", destination: "~/.ssh/me.pub"
