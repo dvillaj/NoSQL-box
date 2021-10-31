@@ -17,7 +17,6 @@ vagrant up
 ```
 
 
-
 ## Setup Ports by SSH Tunnelling
 
 
@@ -32,12 +31,19 @@ ssh -N -L 8001:127.0.0.1:8001 \
              -L 8098:127.0.0.1:8098 \
              -L 8082:127.0.0.1:8082 \
              -L 7687:127.0.0.1:7687 \
+             -L 7687:127.0.0.1:61208 \
+             -L 7687:127.0.0.1:9000 \
             learner@<MACHINE_IP>
 ```
 
 ## Jupyter Lab
 
 http://localhost:8001
+
+
+## Glances
+
+http://localhost:61208
 
 
 ## SSH Config
