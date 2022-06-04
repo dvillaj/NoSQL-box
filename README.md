@@ -16,6 +16,11 @@ Additional info can be found in the following repo: https://github.com/dvillaj/N
 vagrant up
 ```
 
+## Export Virtual Machine
+
+- Diable COM Port
+- Disable all shared folders
+
 ## Jupyter Lab
 
 http://localhost:8001
