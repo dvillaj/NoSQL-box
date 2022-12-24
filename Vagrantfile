@@ -4,11 +4,17 @@ Vagrant.configure("2") do |config|
   config.vm.box = "ubuntu/focal64"
   config.vm.hostname = "nosql-box"
   config.vm.box_check_update = false
+  # config.vm.synced_folder '/host/path', '/guest/path', SharedFoldersEnableSymlinksCreate: false
 
   config.vm.provider "virtualbox" do |vb|
     vb.name = "NoSQL_Box"
     vb.cpus = 2
     vb.memory = 3048
+
+    vb.customize [ "modifyvm", :id, "--uart1", "off" ]
+    vb.customize [ "modifyvm", :id, "--uart2", "off" ]
+    vb.customize [ "modifyvm", :id, "--uart3", "off" ]
+    vb.customize [ "modifyvm", :id, "--uart4", "off" ]
   end
 
   # Ports

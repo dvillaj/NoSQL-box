@@ -13,6 +13,7 @@ Additional info can be found in the following repo: https://github.com/dvillaj/N
 ## Install
 
 ```
+VAGRANT_DISABLE_VBOXSYMLINKCREATE=1
 vagrant up
 ```
 
